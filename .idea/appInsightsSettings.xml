@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.xarays.xaraysmarketplace" />
+                  <option name="mobileSdkAppId" value="1:574336098762:android:303f272b9faa155fb36f33" />
+                  <option name="projectId" value="xarays-6470b" />
+                  <option name="projectNumber" value="574336098762" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
