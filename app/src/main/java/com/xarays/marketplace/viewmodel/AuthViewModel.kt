@@ -2,6 +2,7 @@ package com.xarays.marketplace.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuth
 import com.xarays.marketplace.data.AuthRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,9 +20,17 @@ class AuthViewModel : ViewModel() {
     private val _isAuthenticated = MutableStateFlow(false)
     val isAuthenticated: StateFlow<Boolean> = _isAuthenticated
 
+    private val _userEmail = MutableStateFlow<String?>(null)
+    val userEmail: StateFlow<String?> = _userEmail
+
+    private val firebaseAuth = FirebaseAuth.getInstance()
+    private val authStateListener = FirebaseAuth.AuthStateListener { auth ->
+        _isAuthenticated.value = auth.currentUser != null
+        _userEmail.value = auth.currentUser?.email
+    }
+
     init {
-        // Cek apakah user sudah login sebelumnya
-        _isAuthenticated.value = repo.currentUser != null
+        firebaseAuth.addAuthStateListener(authStateListener)
     }
 
     fun login(email: String, password: String) {
@@ -60,5 +69,14 @@ class AuthViewModel : ViewModel() {
 
     fun clearError() {
         _errorMessage.value = null
+    }
+
+    fun logout() {
+        repo.logout()
+    }
+
+    override fun onCleared() {
+        firebaseAuth.removeAuthStateListener(authStateListener)
+        super.onCleared()
     }
 }
