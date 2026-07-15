@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Xarays Marketplace Admin</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="hero">
+        <p class="eyebrow">Firebase Firestore Admin</p>
+        <h1>Dashboard Admin Xarays</h1>
+        <p class="lead">
+          Kelola produk, pesanan, dan chat customer dari satu dashboard. Data tersimpan ke Firestore dan sinkron ke
+          aplikasi Android.
+        </p>
+      </section>
+
+      <section class="card tabs">
+        <button class="tab active" data-tab="products">Produk</button>
+        <button class="tab" data-tab="orders">Pesanan</button>
+        <button class="tab" data-tab="chat">Chat</button>
+      </section>
+
+      <section class="card panel active" id="panel-products">
+        <div class="section-head">
+          <h2>Tambah Produk</h2>
+          <button type="button" id="seedBtn" class="secondary">Isi contoh data</button>
+        </div>
+        <form id="productForm" class="form">
+          <div class="grid">
+            <label>
+              Judul Produk
+              <input id="title" type="text" placeholder="Akun Mobile Legends Mythic" required />
+            </label>
+            <label>
+              Nama Game
+              <input id="game" type="text" placeholder="Mobile Legends" required />
+            </label>
+            <label>
+              Harga
+              <input id="price" type="number" min="0" step="1" placeholder="500000" required />
+            </label>
+            <label>
+              Tipe
+              <select id="type" required>
+                <option value="ACCOUNT">ACCOUNT</option>
+                <option value="TOPUP">TOPUP</option>
+              </select>
+            </label>
+          </div>
+
+          <label>
+            Deskripsi
+            <textarea id="description" rows="4" placeholder="Detail produk..." required></textarea>
+          </label>
+
+          <div class="grid">
+            <label>
+              Seller ID
+              <input id="sellerId" type="text" value="admin" />
+            </label>
+            <label>
+              Stok
+              <input id="stock" type="number" min="0" step="1" placeholder="10" value="1" required />
+            </label>
+            <label>
+              Image URL opsional
+              <input id="imageUrl" type="url" placeholder="https://..." />
+            </label>
+          </div>
+
+          <div id="accountCredentials" class="grid hidden">
+            <label>
+              Email / Username Login
+              <input id="accountLogin" type="text" placeholder="emailatauusername@example.com" />
+            </label>
+            <label>
+              Password Login
+              <input id="accountPassword" type="password" placeholder="password akun" />
+            </label>
+          </div>
+
+          <div class="actions">
+            <button type="submit">Simpan ke Firestore</button>
+          </div>
+        </form>
+        <div class="section-head spaced">
+          <h2>Data Produk</h2>
+          <button type="button" id="reloadProductsBtn" class="secondary">Refresh</button>
+        </div>
+        <div id="productStatus" class="status">Siap.</div>
+        <div id="productList" class="list"></div>
+      </section>
+
+      <section class="card panel" id="panel-orders">
+        <div class="section-head">
+          <h2>Pesanan</h2>
+          <button type="button" id="reloadOrdersBtn" class="secondary">Refresh</button>
+        </div>
+        <div class="grid">
+          <label>
+            Urutkan
+            <select id="orderSort">
+              <option value="newest">Terbaru</option>
+              <option value="oldest">Terlama</option>
+            </select>
+          </label>
+          <label>
+            Filter Status
+            <select id="orderStatusFilter">
+              <option value="ALL">Semua</option>
+              <option value="MENUNGGU_PEMBAYARAN_MASUK">Menunggu Pembayaran Masuk</option>
+              <option value="PESANAN_DIPROSES">Pesanan Diproses</option>
+              <option value="SELESAI">Selesai</option>
+              <option value="BATAL">Batal</option>
+            </select>
+          </label>
+        </div>
+        <div id="orderStatus" class="status">Siap.</div>
+        <div id="orderList" class="list"></div>
+      </section>
+
+      <section class="card panel" id="panel-chat">
+        <div class="section-head">
+          <h2>Chat Customer</h2>
+          <button type="button" id="reloadChatBtn" class="secondary">Refresh</button>
+        </div>
+        <div class="chat-compose">
+          <div class="grid">
+            <label>
+              Pilih Pesanan
+              <select id="chatOrderId">
+                <option value="">Chat umum</option>
+              </select>
+            </label>
+            <label>
+              Nama Admin
+              <input id="chatSenderName" type="text" value="Admin" />
+            </label>
+          </div>
+          <label>
+            Pesan Admin
+            <textarea id="chatMessage" rows="4" placeholder="Tulis balasan ke pelanggan..."></textarea>
+          </label>
+          <div class="actions">
+            <button type="button" id="sendChatBtn">Kirim Chat</button>
+          </div>
+        </div>
+        <div id="chatStatus" class="status">Siap.</div>
+        <div id="chatList" class="list"></div>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

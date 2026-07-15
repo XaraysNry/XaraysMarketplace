@@ -27,28 +27,9 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:574336098762:android:51d614d70b48774ab36f33",
+        "mobilesdk_app_id": "1:574336098762:android:a26c4aa4029be567b36f33",
         "android_client_info": {
-          "package_name": "com.xarays.app"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyDrktkVjs5G_hhPDZC717qYaYW4xU5_ld0"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:574336098762:android:303f272b9faa155fb36f33",
-        "android_client_info": {
-          "package_name": "com.xarays.xaraysmarketplace"
+          "package_name": "com.xarays.marketplace"
         }
       },
       "oauth_client": [],

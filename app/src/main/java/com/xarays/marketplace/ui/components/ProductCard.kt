@@ -42,50 +42,58 @@ fun ProductCard(
             )
             Spacer(modifier = Modifier.width(12.dp))
             Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = product.title,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-
-            Spacer(modifier = Modifier.height(4.dp))
-
-            Text(
-                text = product.game,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.primary
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
                 Text(
-                    text = "Rp ${String.format("%,.0f", product.price)}",
-                    style = MaterialTheme.typography.titleLarge,
+                    text = product.title,
+                    style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.secondary
+                    color = MaterialTheme.colorScheme.onSurface
                 )
 
-                Badge(
-                    containerColor = if (product.type == com.xarays.marketplace.model.ProductType.ACCOUNT)
-                        MaterialTheme.colorScheme.primary
-                    else
-                        MaterialTheme.colorScheme.secondary
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Text(
+                    text = product.game,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.primary
+                )
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = if (product.type == com.xarays.marketplace.model.ProductType.ACCOUNT)
-                            "AKUN"
-                        else
-                            "TOPUP",
-                        style = MaterialTheme.typography.labelSmall
+                        text = "Rp ${String.format("%,.0f", product.price)}",
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.secondary
                     )
+
+                    Badge(
+                        containerColor = if (product.type == com.xarays.marketplace.model.ProductType.ACCOUNT)
+                            MaterialTheme.colorScheme.primary
+                        else
+                            MaterialTheme.colorScheme.secondary
+                    ) {
+                        Text(
+                            text = if (product.type == com.xarays.marketplace.model.ProductType.ACCOUNT)
+                                "AKUN"
+                            else
+                                "TOPUP",
+                            style = MaterialTheme.typography.labelSmall
+                        )
+                    }
                 }
-            }
+
+                Spacer(modifier = Modifier.height(6.dp))
+
+                Text(
+                    text = "Stok tersedia: ${product.stock}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
             }
         }
     }

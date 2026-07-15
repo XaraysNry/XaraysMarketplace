@@ -8,8 +8,8 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="com.xarays.xaraysmarketplace" />
-                  <option name="mobileSdkAppId" value="1:574336098762:android:303f272b9faa155fb36f33" />
+                  <option name="appId" value="com.xarays.marketplace" />
+                  <option name="mobileSdkAppId" value="1:574336098762:android:a26c4aa4029be567b36f33" />
                   <option name="projectId" value="xarays-6470b" />
                   <option name="projectNumber" value="574336098762" />
                 </ConnectionSetting>

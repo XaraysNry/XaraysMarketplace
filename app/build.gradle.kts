@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.xarays.marketplace"
-    compileSdk = 37
+    compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.xarays.xaraysmarketplace"
+        applicationId = "com.xarays.marketplace"
         minSdk = 24
-        targetSdk = 37
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -49,6 +49,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.graphics)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+    implementation("androidx.compose.material:material-icons-extended")
 
     implementation(libs.androidx.navigation.compose)
 

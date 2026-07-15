@@ -8,7 +8,8 @@ data class Product(
     val description: String,
     val imageRes: Int,
     val type: ProductType,
-    val sellerId: String = "admin"
+    val sellerId: String = "admin",
+    val stock: Int = 0
 )
 
 

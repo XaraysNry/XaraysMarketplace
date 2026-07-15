@@ -14,6 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -23,6 +24,7 @@ import com.xarays.marketplace.model.Product
 import com.xarays.marketplace.ui.components.ProductCard
 import androidx.compose.foundation.Image
 import androidx.compose.ui.res.painterResource
+import com.xarays.marketplace.R
 
 private data class GameCategory(
     val name: String,
@@ -33,22 +35,33 @@ private data class GameCategory(
 @Composable
 fun HomeScreen(
     products: List<Product>,
+    isLoading: Boolean,
+    errorMessage: String?,
     onProductClick: (String) -> Unit
 ) {
     val categories = remember(products) {
-        products.distinctBy { it.game }.map { GameCategory(it.game, it.imageRes) }
+        products.filter { it.stock > 0 }.distinctBy { it.game }.map { GameCategory(it.game, it.imageRes) }
     }
     var selectedGame by rememberSaveable { mutableStateOf<String?>(null) }
-    val filteredProducts = products.filter { selectedGame == null || it.game == selectedGame }
+    val visibleProducts = products.filter { it.stock > 0 }
+    val filteredProducts = visibleProducts.filter { selectedGame == null || it.game == selectedGame }
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(
-                        text = "🎮 Game Marketplace",
-                        fontWeight = FontWeight.Bold
-                    )
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Image(
+                            painter = painterResource(R.drawable.logo_store),
+                            contentDescription = "Logo Xarays Marketplace",
+                            modifier = Modifier.size(28.dp)
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Text(
+                            text = "Game Marketplace",
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.background
@@ -78,11 +91,39 @@ fun HomeScreen(
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     item {
-                        FilterChip(
-                            selected = selectedGame == null,
+                        Card(
+                            modifier = Modifier
+                                .width(132.dp)
+                                .height(112.dp),
+                            shape = RoundedCornerShape(16.dp),
                             onClick = { selectedGame = null },
-                            label = { Text("Semua") }
-                        )
+                            colors = CardDefaults.cardColors(
+                                containerColor = if (selectedGame == null) {
+                                    MaterialTheme.colorScheme.primaryContainer
+                                } else {
+                                    MaterialTheme.colorScheme.surface
+                                }
+                            )
+                        ) {
+                            Column {
+                                Image(
+                                    painter = painterResource(R.drawable.all_games),
+                                    contentDescription = "Kategori Semua",
+                                    contentScale = ContentScale.Crop,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(76.dp)
+                                        .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
+                                )
+                                Text(
+                                    text = "Semua",
+                                    style = MaterialTheme.typography.labelMedium,
+                                    fontWeight = FontWeight.Bold,
+                                    modifier = Modifier.padding(horizontal = 8.dp, vertical = 6.dp),
+                                    maxLines = 1
+                                )
+                            }
+                        }
                     }
                     items(categories, key = { it.name }) { category ->
                         Card(
@@ -131,11 +172,43 @@ fun HomeScreen(
                 )
             }
 
-            items(filteredProducts) { product ->
-                ProductCard(
-                    product = product,
-                    onClick = { onProductClick(product.id) }
-                )
+            if (isLoading) {
+                item {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                }
+            }
+
+            if (!errorMessage.isNullOrBlank()) {
+                item {
+                    Text(
+                        text = errorMessage,
+                        color = MaterialTheme.colorScheme.error,
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    )
+                }
+            }
+
+            if (!isLoading && visibleProducts.isEmpty()) {
+                item {
+                    Text(
+                        text = "Belum ada produk yang tersedia.",
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
+                    )
+                }
+            } else {
+                items(filteredProducts) { product ->
+                    ProductCard(
+                        product = product,
+                        onClick = { onProductClick(product.id) }
+                    )
+                }
             }
         }
     }
